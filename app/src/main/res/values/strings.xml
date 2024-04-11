@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Movie App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="welcome">Welcome</string>
+    <string name="login">login</string>
+    <string name="register_now">Register Now</string>
+    <string name="enter_your_infromation">Enter Your Infromation</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="register">Register</string>
+    <string name="all_movies">All Movies</string>
+    <string name="logout">logout</string>
+    <string name="search_title">Search Title</string>
+</resources>
