@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.midterm_project.data.common.Resource
 import com.example.midterm_project.domain.repository.main.MainRepository
+import com.example.midterm_project.domain.useCases.main.GetMainMoviesUseCase
 import com.example.midterm_project.presentation.event.main.MainEvent
 import com.example.midterm_project.presentation.mapper.main.toPresenter
 import com.example.midterm_project.presentation.model.main.MoviesFragmentList
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val getMainMoviesUseCase: GetMainMoviesUseCase
 ) : ViewModel() {
 
     private val _mainState = MutableStateFlow(MainState())
@@ -41,7 +42,7 @@ class MainViewModel @Inject constructor(
     private fun fetchMovies(filters: List<Pair<String, String>>) {
         viewModelScope.launch {
             for ((fragmentName, fragmentJsonName) in filters) {
-                repository.getMovieList(fragmentJsonName = fragmentJsonName).collect {
+                getMainMoviesUseCase(fragmentJsonName = fragmentJsonName).collect {
                     when (it) {
                         is Resource.Success -> {
                             val newList = listOf(

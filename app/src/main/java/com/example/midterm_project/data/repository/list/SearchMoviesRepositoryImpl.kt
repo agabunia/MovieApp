@@ -17,7 +17,7 @@ class SearchMoviesRepositoryImpl @Inject constructor(
 ) : SearchMoviesRepository {
     override suspend fun searchMovies(title: String): Flow<Resource<MovieFilterList>> {
         return handleResponse.safeApiCall {
-            searchMoviesService.searchMovies(query = title)
+            searchMoviesService.searchMovies(title = title)
         }.asResource {
             it.toDomain().copy(results = it.toDomain().results.map { movieFilter ->
                 movieFilter.copy(poster = createAbsoluteUrl(movieFilter.poster))

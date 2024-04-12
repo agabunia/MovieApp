@@ -1,12 +1,12 @@
 package com.example.midterm_project.presentation.screen.list
 
-import android.icu.text.CaseMap.Title
-import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.midterm_project.data.common.Resource
 import com.example.midterm_project.domain.repository.list.GenresRepository
 import com.example.midterm_project.domain.repository.list.MovieFilterRepository
+import com.example.midterm_project.domain.useCases.list.GetGenresUseCase
+import com.example.midterm_project.domain.useCases.list.MoviesFilterUseCase
 import com.example.midterm_project.domain.useCases.list.SearchMoviesUseCase
 import com.example.midterm_project.presentation.event.list.ListEvent
 import com.example.midterm_project.presentation.mapper.list.toPresenter
@@ -16,16 +16,15 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject constructor(
-    private val genresRepository: GenresRepository,
-    private val movieFilterRepository: MovieFilterRepository,
-    private val searchMoviesUseCase: SearchMoviesUseCase
+    private val getGenresUseCase: GetGenresUseCase,
+    private val moviesFilterUseCase: MoviesFilterUseCase,
+    private val filterMoviesUseCase: SearchMoviesUseCase
 ): ViewModel() {
     private val _listState = MutableStateFlow(ListState())
     val listState: SharedFlow<ListState> = _listState.asStateFlow()
@@ -37,12 +36,13 @@ class ListViewModel @Inject constructor(
         when(event) {
             is ListEvent.FetchGenres -> fetchGenres()
             is ListEvent.FetchMovies -> fetchMovies(id = event.id)
+            is ListEvent.FetchSearchedMovies -> searchMovies(title = event.title)
         }
     }
 
     private fun fetchGenres() {
         viewModelScope.launch {
-            genresRepository.getGenres().collect{
+            getGenresUseCase().collect{
                 when(it) {
                     is Resource.Success -> {
 
@@ -68,7 +68,7 @@ class ListViewModel @Inject constructor(
 
     private fun fetchMovies(id: Int?) {
         viewModelScope.launch {
-            movieFilterRepository.getMovies(id = id).collect{
+            moviesFilterUseCase(id = id).collect{
                 when(it) {
                     is Resource.Success -> {
                         _listState.update {currentState ->
@@ -92,9 +92,9 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    fun searchMovies(title: String) {
+    private fun searchMovies(title: String) {
         viewModelScope.launch {
-            searchMoviesUseCase(title = title).collect{
+            filterMoviesUseCase(title = title).collect{
                 when(it) {
                     is Resource.Success -> {
                         _listState.update {currentState ->

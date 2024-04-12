@@ -1,6 +1,10 @@
 package com.example.midterm_project.presentation.screen.list
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -32,8 +36,9 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
 
         binding.btnSearch.setOnClickListener {
             val searchTitle = binding.etSearch.text.toString()
-            if(searchTitle.isNotEmpty()) {
-                viewModel.searchMovies(title = searchTitle)
+            if (searchTitle.isNotEmpty()) {
+                viewModel.onEvent(ListEvent.FetchSearchedMovies(title = searchTitle))
+                binding.etSearch.text?.clear()
             }
         }
     }
@@ -52,7 +57,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
         genresRecyclerAdapter = GenresRecyclerAdapter()
         genresRecyclerAdapter.onItemClick = {
             if (it.isClicked) {
-                viewModel.onEvent(ListEvent.FetchMovies(it.id))
+                viewModel.onEvent(ListEvent.FetchMovies(id = it.id))
             } else {
                 viewModel.onEvent(ListEvent.FetchMovies())
             }

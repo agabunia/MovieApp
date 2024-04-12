@@ -13,7 +13,7 @@ interface SearchMoviesService {
         "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNmQ1ZTlhNGFlODBiODJjMDU5YTcwYzlhMzY3YjYwYSIsInN1YiI6IjY1YTRjYWQ0MGQxMWYyMDEyMzI3MjM4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.i4YQ-eB5M4Zuekw7hR1C4kBXDpLYwo5ZU-1UTXemuoQ"
     )
     suspend fun searchMovies(
-        @Query("query") query: String,
+        @Query("query") title: String,
         @Query("include_adult") includeAdult: Boolean = false,
         @Query("include_video") includeVideo: Boolean = false,
         @Query("language") language: String = "en-US",

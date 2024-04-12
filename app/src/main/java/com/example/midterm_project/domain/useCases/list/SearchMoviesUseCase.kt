@@ -4,7 +4,7 @@ import com.example.midterm_project.domain.repository.list.SearchMoviesRepository
 import javax.inject.Inject
 
 class SearchMoviesUseCase @Inject constructor(
-    private val searchMoviesRepository: SearchMoviesRepository
+    private val movieFilter: SearchMoviesRepository
 ) {
-    suspend operator fun invoke(title: String) = searchMoviesRepository.searchMovies(title = title)
+    suspend operator fun invoke(title: String) = movieFilter.searchMovies(title = title)
 }

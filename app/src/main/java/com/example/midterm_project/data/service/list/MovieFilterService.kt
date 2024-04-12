@@ -19,6 +19,6 @@ interface MovieFilterService {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
         @Query("sort_by") sortBy: String = "popularity.desc",
-        @Query("with_genres") genreId: Int? = null
+        @Query("with_genres") genreId: Int? = null,
     ): Response<MovieFilterListDto>
 }
