@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.midterm_project.R
 import com.example.midterm_project.databinding.MovieScrollBinding
 import com.example.midterm_project.presentation.model.main.Movies
 
@@ -42,7 +43,12 @@ class MainRecyclerAdapter :
                 tvTitle.text = movie.title
                 tvDate.text = movie.releaseDate
                 tvVote.text = movie.vote
-                Glide.with(context).load(movie.poster).into(ivPoster)
+                if (movie.poster != null) {
+                    Glide.with(context).load(movie.poster).into(ivPoster)
+                } else {
+                    Glide.with(context).load(R.drawable.img_poster_not_found).into(ivPoster)
+                }
+
                 ivPoster.setOnClickListener {
                     onItemClick?.invoke(movie)
                 }

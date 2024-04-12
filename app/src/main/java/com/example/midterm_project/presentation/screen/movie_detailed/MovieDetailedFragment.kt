@@ -1,5 +1,6 @@
 package com.example.midterm_project.presentation.screen.movie_detailed
 
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -8,6 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.midterm_project.R
 import com.example.midterm_project.databinding.FragmentMovieDetailedBinding
 import com.example.midterm_project.presentation.base.BaseFragment
 import com.example.midterm_project.presentation.event.movie_detailed.MovieDetailedEvent
@@ -57,11 +59,20 @@ class MovieDetailedFragment :
             tvVote.text = state.movieDetailed?.voteAverage.toString()
             tvBudget.text = state.movieDetailed?.budget.toString()
             tvRevenue.text = state.movieDetailed?.revenue.toString()
-            Glide.with(requireContext()).load(state.movieDetailed?.poster).into(ivPoster)
+            if (state.movieDetailed?.backdrop != null) {
+                Glide.with(requireContext()).load(state.movieDetailed.backdrop).into(ivPoster)
+            } else {
+                Glide.with(requireContext()).load(R.drawable.img_not_found_background)
+                    .into(ivPoster)
+            }
         }
+
+        binding.progressBar.visibility =
+            if (state.isLoading) View.VISIBLE else View.GONE
 
         state.errorMessage?.let {
             toastMessage(it)
+            viewModel.onEvent(MovieDetailedEvent.ResetErrorMessage)
         }
     }
 

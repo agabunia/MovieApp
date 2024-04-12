@@ -2,6 +2,7 @@ package com.example.midterm_project.presentation.screen.list
 
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
@@ -87,7 +88,6 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
             movieListRecycler.adapter = movieFilterRecyclerAdapter
         }
         movieFilterRecyclerAdapter.onItemClick = {
-//            navigateToMovieDetailedFragment(it.id)
             viewModel.onEvent(ListEvent.NavigateToDetailed(id = it.id))
         }
         viewModel.onEvent(ListEvent.FetchMovies())
@@ -103,8 +103,12 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
             genresRecyclerAdapter.submitList(it)
         }
 
+        binding.progressBar.visibility =
+            if (state.isLoading) View.VISIBLE else View.GONE
+
         state.errorMessage?.let {
             toastMessage(it)
+            viewModel.onEvent(ListEvent.ResetErrorMessage)
         }
     }
 

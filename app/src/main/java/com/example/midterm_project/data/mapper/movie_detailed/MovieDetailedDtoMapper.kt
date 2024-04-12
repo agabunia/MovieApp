@@ -16,6 +16,6 @@ fun MovieDetailedDto.toDomain(): MovieDetailed {
         runtime = runtime,
         budget = budget,
         revenue = revenue,
-        poster = poster
+        backdrop = backdrop
     )
 }

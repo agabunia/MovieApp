@@ -39,6 +39,7 @@ class ListViewModel @Inject constructor(
             is ListEvent.FetchSearchedMovies -> searchMovies(title = event.title)
             is ListEvent.NavigateToDetailed -> navigateToDetailed(id = event.id)
             is ListEvent.NavigateToMain -> navigateToMain()
+            is ListEvent.ResetErrorMessage -> errorMessage(message = null)
         }
     }
 
@@ -53,11 +54,7 @@ class ListViewModel @Inject constructor(
                         }
                     }
 
-                    is Resource.Error -> {
-                        _listState.update { currentState ->
-                            currentState.copy(errorMessage = it.errorMessage)
-                        }
-                    }
+                    is Resource.Error -> errorMessage(message = it.errorMessage)
 
                     is Resource.Loading -> {
                         _listState.update { currentState ->
@@ -79,11 +76,7 @@ class ListViewModel @Inject constructor(
                         }
                     }
 
-                    is Resource.Error -> {
-                        _listState.update { currentState ->
-                            currentState.copy(errorMessage = it.errorMessage)
-                        }
-                    }
+                    is Resource.Error -> errorMessage(message = it.errorMessage)
 
                     is Resource.Loading -> {
                         _listState.update { currentState ->
@@ -105,11 +98,7 @@ class ListViewModel @Inject constructor(
                         }
                     }
 
-                    is Resource.Error -> {
-                        _listState.update { currentState ->
-                            currentState.copy(errorMessage = it.errorMessage)
-                        }
-                    }
+                    is Resource.Error -> errorMessage(message = it.errorMessage)
 
                     is Resource.Loading -> {
                         _listState.update { currentState ->
@@ -119,6 +108,10 @@ class ListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun errorMessage(message: String?) {
+        _listState.update { currentState -> currentState.copy(errorMessage = message) }
     }
 
     private fun navigateToDetailed(id: Int) {

@@ -93,6 +93,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
         state.errorMessage?.let {
             toastMessage(it)
+            viewModel.onEvent(MainEvent.ResetErrorMessage)
         }
     }
 

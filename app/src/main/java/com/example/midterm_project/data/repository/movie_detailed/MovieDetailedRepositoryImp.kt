@@ -20,7 +20,7 @@ class MovieDetailedRepositoryImp @Inject constructor(
         return handleResponse.safeApiCall {
             movieDetailedService.getMovieDetailed(id = id)
         }.asResource {
-            it.toDomain().copy(poster = createAbsoluteUrl(it.poster))
+            it.toDomain().copy(backdrop = it.backdrop?.let { poster -> createAbsoluteUrl(poster) })
         }
     }
 }

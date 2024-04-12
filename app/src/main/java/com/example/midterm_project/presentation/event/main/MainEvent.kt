@@ -5,4 +5,5 @@ sealed class MainEvent {
     object MovieList: MainEvent()
     object Account: MainEvent()
     data class NavigateToDetailed(val id: Int): MainEvent()
+    object ResetErrorMessage: MainEvent()
 }

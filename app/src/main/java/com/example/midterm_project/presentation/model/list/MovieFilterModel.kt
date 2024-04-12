@@ -6,7 +6,7 @@ data class MovieFilterModel(
     data class MovieFilterModel(
         val id: Int,
         val title: String,
-        val poster: String,
+        val poster: String?,
         val vote: String,
         val releaseDate: String,
         val genresId: List<Int>

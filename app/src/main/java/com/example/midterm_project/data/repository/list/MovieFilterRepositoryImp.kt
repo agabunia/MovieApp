@@ -20,7 +20,7 @@ class MovieFilterRepositoryImp @Inject constructor(
             movieFilterService.getMovieList(genreId = id)
         }.asResource {
             it.toDomain().copy(results = it.toDomain().results.map { movieFilter ->
-                movieFilter.copy(poster = createAbsoluteUrl(movieFilter.poster))
+                movieFilter.copy(poster = movieFilter.poster?.let { poster -> createAbsoluteUrl(poster) })
             })
         }
     }

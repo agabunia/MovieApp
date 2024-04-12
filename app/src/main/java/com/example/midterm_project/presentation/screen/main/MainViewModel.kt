@@ -35,6 +35,7 @@ class MainViewModel @Inject constructor(
             is MainEvent.MovieList -> navigateToMovieList()
             is MainEvent.Account -> navigateToAccount()
             is MainEvent.NavigateToDetailed -> navigateToDetailed(id = event.id)
+            is MainEvent.ResetErrorMessage -> errorMessage(message = null)
         }
     }
 

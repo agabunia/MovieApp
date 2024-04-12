@@ -16,6 +16,6 @@ fun MovieDetailed.toPresenter(): MovieDetailedModel {
         runtime = runtime,
         budget = budget,
         revenue = revenue,
-        poster = poster
+        backdrop = backdrop
     )
 }

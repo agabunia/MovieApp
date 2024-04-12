@@ -1,5 +1,7 @@
 package com.example.midterm_project.presentation.mapper.list
 
+import com.bumptech.glide.Glide
+import com.example.midterm_project.R
 import com.example.midterm_project.domain.model.list.MovieFilterList
 import com.example.midterm_project.presentation.model.list.MovieFilterModel
 

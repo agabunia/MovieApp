@@ -6,4 +6,5 @@ sealed class ListEvent {
     data class FetchSearchedMovies(val title: String) : ListEvent()
     data class NavigateToDetailed(val id: Int) : ListEvent()
     object NavigateToMain : ListEvent()
+    object ResetErrorMessage: ListEvent()
 }

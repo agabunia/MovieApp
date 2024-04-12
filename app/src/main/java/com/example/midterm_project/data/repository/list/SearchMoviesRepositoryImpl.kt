@@ -20,7 +20,7 @@ class SearchMoviesRepositoryImpl @Inject constructor(
             searchMoviesService.searchMovies(title = title)
         }.asResource {
             it.toDomain().copy(results = it.toDomain().results.map { movieFilter ->
-                movieFilter.copy(poster = createAbsoluteUrl(movieFilter.poster))
+                movieFilter.copy(poster = movieFilter.poster?.let { poster -> createAbsoluteUrl(poster) })
             })
         }
     }

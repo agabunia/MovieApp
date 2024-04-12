@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.midterm_project.R
 import com.example.midterm_project.databinding.MovieVerticalListLayoutBinding
 import com.example.midterm_project.presentation.model.list.MovieFilterModel
 
@@ -45,16 +46,20 @@ class MovieFilterRecyclerAdapter :
     inner class MovieFilterViewHolder(private val binding: MovieVerticalListLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val context = binding.root.context
-            fun bind(movie: MovieFilterModel.MovieFilterModel) {
-                binding.apply {
-                    tvTitle.text = movie.title
-                    tvDate.text = movie.releaseDate
-                    tvVote.text = movie.vote
+        fun bind(movie: MovieFilterModel.MovieFilterModel) {
+            binding.apply {
+                tvTitle.text = movie.title
+                tvDate.text = movie.releaseDate
+                tvVote.text = movie.vote
+                if (movie.poster != null) {
                     Glide.with(context).load(movie.poster).into(ivPoster)
-                    ivPoster.setOnClickListener {
-                        onItemClick?.invoke(movie)
-                    }
+                } else {
+                    Glide.with(context).load(R.drawable.img_poster_not_found).into(ivPoster)
+                }
+                ivPoster.setOnClickListener {
+                    onItemClick?.invoke(movie)
                 }
             }
         }
+    }
 }

@@ -25,6 +25,6 @@ data class MovieDetailedDto(
     val budget: Int,
     @Json(name = "revenue")
     val revenue: Int,
-    @Json(name = "poster_path")
-    val poster: String
+    @Json(name = "backdrop_path")
+    val backdrop: String?
 )

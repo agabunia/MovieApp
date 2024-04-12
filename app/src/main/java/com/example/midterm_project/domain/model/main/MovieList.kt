@@ -6,7 +6,7 @@ data class MovieList(
     data class Detail(
         val id: Int,
         val title: String,
-        val poster: String,
+        val poster: String?,
         val vote: String,
         val releaseDate: String
     )

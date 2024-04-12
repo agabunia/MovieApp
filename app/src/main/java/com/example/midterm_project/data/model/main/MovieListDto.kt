@@ -12,7 +12,7 @@ data class MovieListDto(
         @Json(name = "title")
         val title: String,
         @Json(name = "poster_path")
-        val poster: String,
+        val poster: String?,
         @Json(name = "vote_average")
         val vote: String,
         @Json(name = "release_date")

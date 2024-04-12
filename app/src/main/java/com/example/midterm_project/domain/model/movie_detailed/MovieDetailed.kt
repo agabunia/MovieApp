@@ -12,5 +12,5 @@ data class MovieDetailed(
     val runtime: Int,
     val budget: Int,
     val revenue: Int,
-    val poster: String
+    val backdrop: String?
 )

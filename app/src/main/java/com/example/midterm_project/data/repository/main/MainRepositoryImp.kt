@@ -23,7 +23,7 @@ class MainRepositoryImp @Inject constructor(
             mainService.getMovieList(filter = fragmentJsonName)
         }.asResource {
             it.toDomain().copy(results = it.toDomain().results.map { movie ->
-                movie.copy(poster = createAbsoluteUrl(movie.poster))
+                movie.copy(poster = movie.poster?.let { poster -> createAbsoluteUrl(poster) })
             })
         }
     }
