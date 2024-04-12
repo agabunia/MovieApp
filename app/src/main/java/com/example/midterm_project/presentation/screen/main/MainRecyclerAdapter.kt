@@ -41,7 +41,6 @@ class MainRecyclerAdapter :
         fun bind(movie: Movies.Detail) {
             binding.apply {
                 tvTitle.text = movie.title
-                tvDate.text = movie.releaseDate
                 tvVote.text = movie.vote
                 if (movie.poster != null) {
                     Glide.with(context).load(movie.poster).into(ivPoster)

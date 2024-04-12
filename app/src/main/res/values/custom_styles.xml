@@ -3,4 +3,8 @@
     <style name="RoundedSquare">
         <item name="cornerSize">10dp</item>
     </style>
+    <style name="RoundedBottom">
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+    </style>
 </resources>

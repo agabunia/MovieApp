@@ -13,4 +13,8 @@
     <string name="all_movies">All Movies</string>
     <string name="logout">logout</string>
     <string name="search_title">Search Title</string>
+    <string name="imdb">IMDB</string>
+    <string name="_10">/10</string>
+    <string name="min">min</string>
+    <string name="release_date">Release Date:</string>
 </resources>

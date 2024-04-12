@@ -4,11 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/dark_blue"
     android:orientation="vertical"
     android:paddingStart="25dp"
     android:paddingEnd="25dp"
     tools:context=".presentation.screen.registration.RegistrationFragment">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_shape"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:src="@drawable/back"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvWelcome"
@@ -22,14 +37,13 @@
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnBack" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etEmailInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:background="@color/input_color"
+        android:layout_marginTop="130dp"
         android:hint="@string/enter_email"
         android:inputType="textEmailAddress"
         android:paddingStart="25dp"
@@ -48,7 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@color/input_color"
         android:hint="@string/enter_password"
         android:paddingStart="25dp"
         android:paddingTop="15dp"
@@ -66,7 +79,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@color/input_color"
         android:hint="@string/repeat_password"
         android:paddingStart="25dp"
         android:paddingTop="15dp"
