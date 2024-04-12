@@ -1,7 +1,7 @@
 package com.example.midterm_project.data.repository.authentification
 
 import com.example.midterm_project.data.common.Resource
-import com.example.midterm_project.data.utils.await
+import com.example.midterm_project.data.common.await
 import com.example.midterm_project.domain.repository.authentification.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

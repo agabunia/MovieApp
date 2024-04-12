@@ -1,4 +1,4 @@
-package com.example.midterm_project.data.utils
+package com.example.midterm_project.data.common
 
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.ExperimentalCoroutinesApi

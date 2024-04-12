@@ -2,6 +2,7 @@ package com.example.midterm_project.data.repository.list
 
 import com.example.midterm_project.data.common.HandleResponse
 import com.example.midterm_project.data.common.Resource
+import com.example.midterm_project.data.common.createAbsoluteUrl
 import com.example.midterm_project.data.mapper.base.asResource
 import com.example.midterm_project.data.mapper.list.toDomain
 import com.example.midterm_project.data.service.list.SearchMoviesService
@@ -18,7 +19,9 @@ class SearchMoviesRepositoryImpl @Inject constructor(
         return handleResponse.safeApiCall {
             searchMoviesService.searchMovies(query = title)
         }.asResource {
-            it.toDomain()
+            it.toDomain().copy(results = it.toDomain().results.map { movieFilter ->
+                movieFilter.copy(poster = createAbsoluteUrl(movieFilter.poster))
+            })
         }
     }
 }
