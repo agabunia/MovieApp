@@ -56,7 +56,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     private fun setAdapter() {
         movieFragmentRecyclerAdapter = MovieFragmentRecyclerAdapter()
         movieFragmentRecyclerAdapter.onMovieItemClickListener = {
-            navigateToMovieDetailedFragment(it.id)
+            viewModel.onEvent(MainEvent.NavigateToDetailed(id = it.id))
         }
         binding.apply {
             movieFragmentRecycler.layoutManager = LinearLayoutManager(requireContext())
@@ -104,6 +104,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         when (event) {
             is MainViewModel.MainUIEvent.NavigateToAccount -> navigateToAccount()
             is MainViewModel.MainUIEvent.NavigateToMovieList -> navigateToMovieListFragment()
+            is MainViewModel.MainUIEvent.NavigateToDetailed -> navigateToMovieDetailedFragment(id = event.id)
         }
     }
 

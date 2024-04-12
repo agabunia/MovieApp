@@ -29,6 +29,7 @@ class AccountViewModel @Inject constructor(
     fun onEvent(event: AccountEvent) {
         when (event) {
             is AccountEvent.Logout -> logout()
+            is AccountEvent.NavigateToMain -> navigateToMain()
         }
     }
 
@@ -51,7 +52,14 @@ class AccountViewModel @Inject constructor(
         }
     }
 
+    private fun navigateToMain() {
+        viewModelScope.launch {
+            _uiEvent.emit(AccountUiEvent.NavigateToMain)
+        }
+    }
+
     sealed interface AccountUiEvent {
         object NavigateToLogin : AccountUiEvent
+        object NavigateToMain: AccountUiEvent
     }
 }

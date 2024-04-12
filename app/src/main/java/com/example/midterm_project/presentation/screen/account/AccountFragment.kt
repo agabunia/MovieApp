@@ -19,7 +19,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBind
 
     override fun bindListeners() {
         binding.btnBack.setOnClickListener {
-            navigateToMain()
+            viewModel.onEvent(AccountEvent.NavigateToMain)
         }
 
         binding.btnLogout.setOnClickListener {
@@ -48,6 +48,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBind
     private fun handleNavigation(event: AccountViewModel.AccountUiEvent) {
         when(event) {
             is AccountViewModel.AccountUiEvent.NavigateToLogin -> navigateToLogin()
+            is AccountViewModel.AccountUiEvent.NavigateToMain -> navigateToMain()
         }
     }
 

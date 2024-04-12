@@ -25,7 +25,7 @@ class ListViewModel @Inject constructor(
     private val getGenresUseCase: GetGenresUseCase,
     private val moviesFilterUseCase: MoviesFilterUseCase,
     private val filterMoviesUseCase: SearchMoviesUseCase
-): ViewModel() {
+) : ViewModel() {
     private val _listState = MutableStateFlow(ListState())
     val listState: SharedFlow<ListState> = _listState.asStateFlow()
 
@@ -33,17 +33,19 @@ class ListViewModel @Inject constructor(
     val uiEvent: SharedFlow<ListUIEvent> get() = _uiEvent
 
     fun onEvent(event: ListEvent) {
-        when(event) {
+        when (event) {
             is ListEvent.FetchGenres -> fetchGenres()
             is ListEvent.FetchMovies -> fetchMovies(id = event.id)
             is ListEvent.FetchSearchedMovies -> searchMovies(title = event.title)
+            is ListEvent.NavigateToDetailed -> navigateToDetailed(id = event.id)
+            is ListEvent.NavigateToMain -> navigateToMain()
         }
     }
 
     private fun fetchGenres() {
         viewModelScope.launch {
-            getGenresUseCase().collect{
-                when(it) {
+            getGenresUseCase().collect {
+                when (it) {
                     is Resource.Success -> {
 
                         _listState.update { currentState ->
@@ -52,12 +54,13 @@ class ListViewModel @Inject constructor(
                     }
 
                     is Resource.Error -> {
-                        _listState.update { currentState->
+                        _listState.update { currentState ->
                             currentState.copy(errorMessage = it.errorMessage)
                         }
                     }
+
                     is Resource.Loading -> {
-                        _listState.update { currentState->
+                        _listState.update { currentState ->
                             currentState.copy(isLoading = it.loading)
                         }
                     }
@@ -68,22 +71,22 @@ class ListViewModel @Inject constructor(
 
     private fun fetchMovies(id: Int?) {
         viewModelScope.launch {
-            moviesFilterUseCase(id = id).collect{
-                when(it) {
+            moviesFilterUseCase(id = id).collect {
+                when (it) {
                     is Resource.Success -> {
-                        _listState.update {currentState ->
+                        _listState.update { currentState ->
                             currentState.copy(movies = it.data.toPresenter().results)
                         }
                     }
 
                     is Resource.Error -> {
-                        _listState.update {currentState ->
+                        _listState.update { currentState ->
                             currentState.copy(errorMessage = it.errorMessage)
                         }
                     }
 
                     is Resource.Loading -> {
-                        _listState.update {currentState ->
+                        _listState.update { currentState ->
                             currentState.copy(isLoading = it.loading)
                         }
                     }
@@ -94,22 +97,22 @@ class ListViewModel @Inject constructor(
 
     private fun searchMovies(title: String) {
         viewModelScope.launch {
-            filterMoviesUseCase(title = title).collect{
-                when(it) {
+            filterMoviesUseCase(title = title).collect {
+                when (it) {
                     is Resource.Success -> {
-                        _listState.update {currentState ->
+                        _listState.update { currentState ->
                             currentState.copy(movies = it.data.toPresenter().results)
                         }
                     }
 
                     is Resource.Error -> {
-                        _listState.update {currentState ->
+                        _listState.update { currentState ->
                             currentState.copy(errorMessage = it.errorMessage)
                         }
                     }
 
                     is Resource.Loading -> {
-                        _listState.update {currentState ->
+                        _listState.update { currentState ->
                             currentState.copy(isLoading = it.loading)
                         }
                     }
@@ -118,7 +121,20 @@ class ListViewModel @Inject constructor(
         }
     }
 
+    private fun navigateToDetailed(id: Int) {
+        viewModelScope.launch {
+            _uiEvent.emit(ListUIEvent.NavigateToDetailed(id = id))
+        }
+    }
+
+    private fun navigateToMain() {
+        viewModelScope.launch {
+            _uiEvent.emit(ListUIEvent.NavigateToMain)
+        }
+    }
+
     sealed interface ListUIEvent {
-        object NavigateToDetailed: ListUIEvent
+        data class NavigateToDetailed(val id: Int) : ListUIEvent
+        object NavigateToMain : ListUIEvent
     }
 }

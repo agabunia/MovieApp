@@ -34,6 +34,7 @@ class MainViewModel @Inject constructor(
             is MainEvent.FetchMovies -> fetchMovies(event.filters)
             is MainEvent.MovieList -> navigateToMovieList()
             is MainEvent.Account -> navigateToAccount()
+            is MainEvent.NavigateToDetailed -> navigateToDetailed(id = event.id)
         }
     }
 
@@ -90,8 +91,15 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private fun navigateToDetailed(id: Int) {
+        viewModelScope.launch {
+            _uiEvent.emit(MainUIEvent.NavigateToDetailed(id = id))
+        }
+    }
+
     sealed interface MainUIEvent {
         object NavigateToMovieList : MainUIEvent
         object NavigateToAccount : MainUIEvent
+        data class NavigateToDetailed(val id: Int): MainUIEvent
     }
 }

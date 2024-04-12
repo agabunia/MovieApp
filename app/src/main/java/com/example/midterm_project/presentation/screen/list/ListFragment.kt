@@ -31,7 +31,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
 
     override fun bindListeners() {
         binding.btnBack.setOnClickListener {
-            navigateToMain()
+            viewModel.onEvent(ListEvent.NavigateToMain)
         }
 
         binding.btnSearch.setOnClickListener {
@@ -48,6 +48,14 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.listState.collect {
                     handleState(it)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiEvent.collect {
+                    handleNavigationEvent(it)
                 }
             }
         }
@@ -79,7 +87,8 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
             movieListRecycler.adapter = movieFilterRecyclerAdapter
         }
         movieFilterRecyclerAdapter.onItemClick = {
-            navigateToMovieDetailedFragment(it.id)
+//            navigateToMovieDetailedFragment(it.id)
+            viewModel.onEvent(ListEvent.NavigateToDetailed(id = it.id))
         }
         viewModel.onEvent(ListEvent.FetchMovies())
     }
@@ -96,6 +105,13 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
 
         state.errorMessage?.let {
             toastMessage(it)
+        }
+    }
+
+    private fun handleNavigationEvent(event: ListViewModel.ListUIEvent) {
+        when (event) {
+            is ListViewModel.ListUIEvent.NavigateToDetailed -> navigateToMovieDetailedFragment(id = event.id)
+            is ListViewModel.ListUIEvent.NavigateToMain -> navigateToMain()
         }
     }
 
